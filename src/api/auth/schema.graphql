@@ -1,0 +1,10 @@
+# import User from '../user/schema.graphql'
+
+type Auth {
+    token: String!
+    user: User!
+}
+
+type Query {
+    authenticate(email: String!, password: String!): Auth!
+}
