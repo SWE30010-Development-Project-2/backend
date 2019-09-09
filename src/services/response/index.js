@@ -1,46 +1,45 @@
 export const success = () => (entity) => {
-    if (entity) {
-        return entity;
-    }
+  if (entity) {
+    return entity
+  }
 
-    return null
-};
+  return null
+}
 
 export const notFound = (context) => (entity) => {
-    if (entity) {
-        return entity
-    }
+  if (entity) {
+    return entity
+  }
 
-    context.response.status = 404;
-    throw new Error('404 Not Found')
-};
+  context.response.status = 404
+  throw new Error('404 Not Found')
+}
 
 export const isSelf = (context) => (entity) => {
-    if(entity) {
-        if(context.request.header.authorization) {
-            return entity;
-        }
-
-        context.response.status = 401;
-        throw new Error('401 Not Authorized')
+  if (entity) {
+    if (context.request.header.authorization) {
+      return entity
     }
 
-    return null
-};
+    context.response.status = 401
+    throw new Error('401 Not Authorized')
+  }
+
+  return null
+}
 
 export const authorOrAdmin = (context) => (entity) => {
-    if (entity) {
-        const { Authorization } = context.services
-        const isAuthor = Authorization.user != null
+  if (entity) {
+    const { Authorization } = context.services
+    const isAuthor = Authorization.user != null
 
-        if (isAuthor) {
-            return entity
-        }
-
-
-        context.response.status = 401
-        throw new Error('401 Not Authorized')
+    if (isAuthor) {
+      return entity
     }
 
-    return null
-};
+    context.response.status = 401
+    throw new Error('401 Not Authorized')
+  }
+
+  return null
+}
