@@ -1,7 +1,7 @@
 import * as services from './services'
 
 export default class Context {
-  constructor ({ req, res }) {
+  constructor (req, res) {
     this.request = req
     this.response = res
     this.services = {}

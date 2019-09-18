@@ -1,38 +1,23 @@
-import graphqlHTTP from 'koa-graphql'
 import Context from './context'
-import schema from '../../api/schema'
 import passport from 'passport'
 import Authorization from './services/Authorization'
+import { AuthenticationError } from 'apollo-server-koa'
 
-export default () => graphqlHTTP((req, res) => {
-  const context = new Context({ req, res })
-  //
-  // passport.authenticate('bearer', { session: false }, (err, user, info) => {
-  //     context.services['Authorization'] = new Authorization(user)
-  //     console.log(context)
-  // })(req, res);
-  //
-  //
-  // return {
-  //     context,
-  //     graphiql: process.env.NODE_ENV !== 'production',
-  //     pretty: true,
-  //     schema
-  // }
+export default ({ request, response }) => {
+  const context = new Context(request, response)
 
   return new Promise((resolve, reject) => {
     const next = () => {
-      resolve({
-        context,
-        graphiql: process.env.NODE_ENV !== 'production',
-        pretty: true,
-        schema
-      })
+      resolve(context)
     }
 
-    passport.authenticate('bearer', { session: false }, (err, user) => {
+    passport.authenticate('bearer', { session: false }, (error, user) => {
+      if (error) {
+        reject(new AuthenticationError('Invalid email or password'))
+      }
+
       context.services.Authorization = new Authorization(user)
       next()
-    })(req, res, next)
+    })(request, response, next)
   })
-})
+}
