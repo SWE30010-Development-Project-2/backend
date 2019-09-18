@@ -1,3 +1,5 @@
+import { UserInputError, AuthenticationError } from 'apollo-server-koa'
+
 export const success = () => (entity) => {
   if (entity) {
     return entity
@@ -12,7 +14,7 @@ export const notFound = (context) => (entity) => {
   }
 
   context.response.status = 404
-  throw new Error('404 Not Found')
+  return throw new UserInputError('404 User Not Found')
 }
 
 export const isSelf = (context) => (entity) => {
@@ -22,7 +24,7 @@ export const isSelf = (context) => (entity) => {
     }
 
     context.response.status = 401
-    throw new Error('401 Not Authorized')
+    return throw new AuthenticationError('401 Not Authorized')
   }
 
   return null
@@ -31,14 +33,15 @@ export const isSelf = (context) => (entity) => {
 export const authorOrAdmin = (context) => (entity) => {
   if (entity) {
     const { Authorization } = context.services
-    const isAuthor = Authorization.user != null
+    const user = Authorization.user
+    const isAuthor = user && entity[0] && entity[0]._id.equals(user.id)
 
     if (isAuthor) {
       return entity
     }
 
     context.response.status = 401
-    throw new Error('401 Not Authorized')
+    return throw new AuthenticationError('401 Not Authorized')
   }
 
   return null

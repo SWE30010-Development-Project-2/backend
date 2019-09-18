@@ -10,10 +10,11 @@ export default {
         .then(users => users.map((user) => user.view(true)))
         .catch(error => console.log(error))
     },
-    user: (parent, args) => {
+    user: (parent, args, context) => {
       return User.findById(args.id)
+        .then(notFound(context))
         .then(user => user.view(true))
-        .catch(error => console.log(error))
+        .catch(error => throw error)
     }
   },
   Mutation: {
