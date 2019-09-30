@@ -12,11 +12,11 @@ const model = new Schema(
       ref: 'User',
       required: true
     },
-    products: {
-      type: [Schema.ObjectId],
+    products: [{
+      type: Schema.ObjectId,
       ref: 'Product',
       required: true
-    }
+    }]
   },
   {
     timestamps: true

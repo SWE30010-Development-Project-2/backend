@@ -6,7 +6,7 @@ export default {
   Query: {
     users: (parent, args, context) => {
       return User.find({ username: { $regex: args.username, $options: 'i' } })
-        .then(authorOrAdmin(context))
+        .then(isSelf(context))
         .then(users => users.map((user) => user.view(true)))
         .catch(error => console.log(error))
     },

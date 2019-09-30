@@ -21,6 +21,9 @@ export default {
   Mutation: {
     addTransaction: (parent, args) => {
       return new Transaction(args).save()
+        .then(transaction => Transaction.findById(transaction.id)
+          .populate('employee customer products'))
+        .catch(error => throw error)
     },
     updateTransaction: (parent, args, context) => {
       return Transaction.findById(args.id)
