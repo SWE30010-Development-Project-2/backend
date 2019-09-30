@@ -1,4 +1,5 @@
 import User from '../user/model'
+import { AuthenticationError } from 'apollo-server-koa'
 import { sign } from '../../services/jwt'
 import { notFound } from '../../services/response'
 
@@ -13,7 +14,7 @@ export default {
             token: sign(user.id),
             user: user
           })
-        })
+        }).catch(() => throw new AuthenticationError('invalid email or password combination'))
     }
   }
 }

@@ -13,7 +13,8 @@ export default ({ request, response }) => {
 
     passport.authenticate('bearer', { session: false }, (error, user) => {
       if (error) {
-        reject(new AuthenticationError('Invalid email or password'))
+        response.status = 401
+        reject(new AuthenticationError('invalid access_token'))
       }
 
       context.services.Authorization = new Authorization(user)

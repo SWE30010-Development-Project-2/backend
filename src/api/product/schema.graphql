@@ -1,21 +1,18 @@
-type User {
+type Product {
     id: ID!
-    username: String!
-    email: String!
-    password: String!
-    avatar: String
-    seen: String
-    createdAt: String
-    updatedAt: String
+    name: String!
+    description: String
+    barcode: String
+    price: Float!
 }
 
 type Query {
-    users(username: String): [User]
-    user(id: String!): User
+    products: [Product]
+    product(id: String!): Product
 }
 
 type Mutation {
-    addUser(username: String!, email: String!, password: String!): User!
-    updateUser(id: String!, username: String, email: String, password: String, avatar: String): User
-    removeUser(id: String!): User
+    addProduct(name: String!, description: String, barcode: String, price: Float!): Product!
+    updateProduct(id: String!, name: String, description: String, barcode: String, price: Float): Product!
+    removeProduct(id: String!): Product!
 }

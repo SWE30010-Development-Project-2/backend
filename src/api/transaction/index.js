@@ -3,6 +3,6 @@ import { makeExecutableSchema } from 'graphql-tools'
 import resolvers from './resolver'
 
 export default makeExecutableSchema({
-  typeDefs: importSchema('./src/api/product/schema.graphql'),
+  typeDefs: importSchema('./src/api/transaction/schema.graphql'),
   resolvers
 })

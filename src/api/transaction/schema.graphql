@@ -1,0 +1,22 @@
+# import User from '../user/schema.graphql'
+# import Product from '../product/schema.graphql'
+
+type Transaction {
+    id: ID!
+    employee: User!
+    customer: User!
+    products: [Product!]
+    createdAt: String
+    updatedAt: String
+}
+
+type Query {
+    transactions: [Transaction]
+    transaction(id: String!): Transaction
+}
+
+type Mutation {
+    addTransaction(employee: ID!, customer: ID!, products: [ID!]!): Transaction!
+    updateTransaction(id: String!, employee: ID, customer: ID, products: [ID]): Transaction!
+    removeTransaction(id: String!): Transaction!
+}
