@@ -69,7 +69,7 @@ model.methods = {
     } : view
   },
   authenticate (password) {
-    return true
+    return this
     // return bcrypt.compare(password, this.password).then(valid => valid ? this : false)
   }
 }

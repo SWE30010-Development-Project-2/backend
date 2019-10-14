@@ -7,4 +7,5 @@ type Auth {
 
 type Query {
     authenticate(email: String!, password: String!): Auth!
+    verify(token: String!): Auth!
 }
