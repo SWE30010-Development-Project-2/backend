@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import unique from 'mongoose-beautiful-unique-validation'
 import crypto from 'crypto'
-import bcrypt from 'bcrypt'
 
 const model = new Schema(
   {
@@ -42,16 +41,16 @@ model.path('email').set(function (email) {
   return email
 })
 
-model.pre('save', function (next) {
-  if (!this.isModified('password')) {
-    return next()
-  }
-
-  bcrypt.hash(this.password, 9).then((hash) => {
-    this.password = hash
-    next()
-  }).catch(next)
-})
+// model.pre('save', function (next) {
+//   if (!this.isModified('password')) {
+//     return next()
+//   }
+//
+//   // bcrypt.hash(this.password, 9).then((hash) => {
+//   //   this.password = hash
+//   //   next()
+//   // }).catch(next)
+// })
 
 model.methods = {
   view (full) {
@@ -70,7 +69,8 @@ model.methods = {
     } : view
   },
   authenticate (password) {
-    return bcrypt.compare(password, this.password).then(valid => valid ? this : false)
+    return this
+    // return bcrypt.compare(password, this.password).then(valid => valid ? this : false)
   }
 }
 

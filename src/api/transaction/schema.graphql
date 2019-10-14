@@ -4,7 +4,6 @@
 type Transaction {
     id: ID!
     employee: User!
-    customer: User!
     products: [Product!]
     createdAt: String
     updatedAt: String
@@ -16,7 +15,7 @@ type Query {
 }
 
 type Mutation {
-    addTransaction(employee: ID!, customer: ID!, products: [ID!]!): Transaction!
-    updateTransaction(id: String!, employee: ID, customer: ID, products: [ID]): Transaction!
+    addTransaction(employee: ID!, products: [ID!]!): Transaction!
+    updateTransaction(id: String!, employee: ID, products: [ID]): Transaction!
     removeTransaction(id: String!): Transaction!
 }
